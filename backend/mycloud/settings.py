@@ -17,7 +17,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
 # Пользовательская модель
 AUTH_USER_MODEL = 'users.MyUser'
 
-# Установка приложения
+# Установка приложений
 INSTALLED_APPS = [
     # Стандартные Django-приложения
     'django.contrib.admin',
@@ -50,11 +50,11 @@ MIDDLEWARE = [
 # Корневой URLconf
 ROOT_URLCONF = 'mycloud.urls'
 
-# Templates
+# Templates (папка templates не используется, DIRS пустой)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,7 +70,7 @@ TEMPLATES = [
 # WSGI
 WSGI_APPLICATION = 'mycloud.wsgi.application'
 
-# База данных PostgreSQL
+# БД PostgreSQL
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -88,6 +88,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# (Опционально) раздача React build (если будет через Django)
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, '../frontend/build/static'),
+# ]
 
 # Django REST Framework
 REST_FRAMEWORK = {
@@ -118,5 +123,5 @@ LOGGING = {
     'root': {'handlers': ['console'], 'level': 'INFO'},
 }
 
-# Чтобы избавиться от предупреждений W042
+# Убрать предупреждений Django
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
