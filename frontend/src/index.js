@@ -1,18 +1,16 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-import store from './store';
-import './styles.css';
+import store from './app/store';
+import AppRouter from './routes/AppRouter';
 
-const rootEl = document.getElementById('root');
-const root = createRoot(rootEl);
+// основной css (если нужен)
+import './styles/main.css';
 
+// создаём корень и рендерим React
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <AppRouter />
   </Provider>
 );
