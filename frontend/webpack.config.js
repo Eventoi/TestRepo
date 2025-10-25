@@ -1,39 +1,63 @@
+// Настройка Webpack для сборки React приложения
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',  // можно поменять на production перед сборкой
+  // Точка входа в приложение
   entry: './src/index.js',
+  
+  // Куда складывать собранные файлы
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath: '/'
   },
+  
+  // Настройки для dev-сервера
   devServer: {
-    static: './dist',
-    historyApiFallback: true, // для React Router
     port: 3000,
-    open: true,
+    hot: true,
+    historyApiFallback: true, // для React Router
+    proxy: [
+      {
+        context: ['/api', '/download'],
+        target: 'http://localhost:8000', // Django backend
+        changeOrigin: true
+      }
+    ]
   },
+  
+  // Загрузчики файлов
   module: {
     rules: [
       {
+        // Обработка JS и JSX файлов через Babel
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
       },
       {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        // Обработка CSS файлов
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       }
-    ],
+    ]
   },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-  },
+  
+  // Плагины
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
-    }),
+      template: './public/index.html'
+    })
   ],
+  
+  // Расширения файлов
+  resolve: {
+    extensions: ['.js', '.jsx']
+  }
 };

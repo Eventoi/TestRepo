@@ -1,16 +1,19 @@
+// Точка входа в React-приложение
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import store from './app/store';
-import AppRouter from './routes/AppRouter';
+import { BrowserRouter } from 'react-router-dom';
+import store from './redux/store';
+import App from './App';
 
-// основной css (если нужен)
-import './styles/main.css';
-
-// создаём корень и рендерим React
+// Создание корня приложения
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Рендер приложения с Redux и Router
 root.render(
   <Provider store={store}>
-    <AppRouter />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
 );
